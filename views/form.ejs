@@ -1,0 +1,65 @@
+<%- include('partials/header') %>
+
+<h3><%= persona && persona.id ? 'Editar persona' : 'Nuevo registro' %></h3>
+
+<form method="POST" action="<%= persona && persona.id ? '/personas/' + persona.id + '?_method=PUT' : '/personas' %>" novalidate>
+  <div class="mb-3">
+    <label class="form-label">DNI</label>
+    <input name="dni" id="dni" value="<%= persona ? persona.dni : '' %>" class="form-control <%= errors.dni ? 'is-invalid' : '' %>">
+    <% if (errors.dni) { %><div class="invalid-feedback"><%= errors.dni.msg %></div><% } %>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Nombres</label>
+      <input name="nombres" id="nombres" value="<%= persona ? persona.nombres : '' %>" class="form-control <%= errors.nombres ? 'is-invalid' : '' %>">
+      <% if (errors.nombres) { %><div class="invalid-feedback"><%= errors.nombres.msg %></div><% } %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Apellidos</label>
+      <input name="apellidos" id="apellidos" value="<%= persona ? persona.apellidos : '' %>" class="form-control <%= errors.apellidos ? 'is-invalid' : '' %>">
+      <% if (errors.apellidos) { %><div class="invalid-feedback"><%= errors.apellidos.msg %></div><% } %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Fecha de nacimiento</label>
+    <input type="date" name="fechaNacimiento" id="fechaNacimiento" value="<%= persona ? persona.fechaNacimiento : '' %>" class="form-control <%= errors.fechaNacimiento ? 'is-invalid' : '' %>">
+    <% if (errors.fechaNacimiento) { %><div class="invalid-feedback"><%= errors.fechaNacimiento.msg %></div><% } %>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Género</label>
+    <div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="genero" id="genM" value="M" <%= persona && persona.genero === 'M' ? 'checked' : '' %>>
+        <label class="form-check-label" for="genM">Masculino</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="genero" id="genF" value="F" <%= persona && persona.genero === 'F' ? 'checked' : '' %>>
+        <label class="form-check-label" for="genF">Femenino</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="genero" id="genO" value="O" <%= persona && persona.genero === 'O' ? 'checked' : '' %>>
+        <label class="form-check-label" for="genO">Otro</label>
+      </div>
+      <% if (errors.genero) { %><div class="text-danger mt-1"><%= errors.genero.msg %></div><% } %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Ciudad</label>
+    <select name="ciudad" id="ciudad" class="form-select <%= errors.ciudad ? 'is-invalid' : '' %>">
+      <option value="">-- Seleccione --</option>
+      <% ciudades.forEach(c => { %>
+        <option value="<%= c %>" <%= persona && persona.ciudad === c ? 'selected' : '' %>><%= c %></option>
+      <% }) %>
+    </select>
+    <% if (errors.ciudad) { %><div class="invalid-feedback"><%= errors.ciudad.msg %></div><% } %>
+  </div>
+
+  <button class="btn btn-success">Guardar</button>
+  <a class="btn btn-secondary" href="/">Cancelar</a>
+</form>
+
+<%- include('partials/footer') %>
