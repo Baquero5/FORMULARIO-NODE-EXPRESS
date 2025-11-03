@@ -2,6 +2,12 @@
 
 <h3><%= persona && persona.id ? 'Editar persona' : 'Nuevo registro' %></h3>
 
+<% if (error) { %>
+  <div class="alert alert-danger">
+    <%= error %>
+  </div>
+<% } %>
+
 <form method="POST" action="<%= persona && persona.id ? '/personas/' + persona.id + '?_method=PUT' : '/personas' %>" novalidate>
   <div class="mb-3">
     <label class="form-label">DNI</label>
